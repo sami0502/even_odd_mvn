@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    tools{
+        maven 'MAVEN'
+        jdk 'JDK'
+    }
+    stages {
+        stage('build') {
+            steps {
+             powershell '''cd C:\\Users\\E40047831\\eclipse-workspace\\maven_jenkins
+             cd src\\main\\java\\maven_jenkins
+             javac maven.java
+             java maven.java 45'''
+            }
+        }
+    }
+}
