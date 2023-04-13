@@ -1,17 +1,32 @@
 pipeline {
     agent any
-    tools{
-        maven 'MAVEN'
-        jdk 'JDK'
+    tools {
+         maven 'maven'
+         jdk 'java'
     }
     stages {
-        stage('build') {
+        stage('Hello') {
             steps {
-             powershell '''cd C:\\Users\\E40047831\\eclipse-workspace\\maven_jenkins
-             cd src\\main\\java\\maven_jenkins
-             javac maven.java
-             java maven.java 45'''
+                echo 'Hello World'
+
             }
+        }
+        stage('checkout') {
+          steps {
+                powershell '''cd C:\\\\Users\\\\lenovo\\\\eclipse-workspace\\\\maven_hello_jenkins_test
+                dir
+                mvn -s pom.xml -DskipTests install'''
+          }   
+          post {
+                success {
+                     archiveArtifacts artifacts:'**/*.jar'
+                }
+          }
+        }
+        stage('Test') {
+              steps{
+                   powershell '''mvn -s pom.xml test'''
+              }
         }
     }
 }
